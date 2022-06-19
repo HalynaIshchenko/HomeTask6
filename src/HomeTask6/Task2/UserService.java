@@ -17,9 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Main {
+public class UserService {
+    private static Map<Person, List<Account>> map = new HashMap<>();
+
     public static void main(String[] args) {
-        Map<Person, List<Account>> map = new HashMap<>();
 
         // create person
         Person vasyl = new Person("Vasyl");
@@ -34,26 +35,33 @@ public class Main {
         list3.add(new Account(7));
 
         // add person and account to map
-        map.put(vasyl, list1);
-        // add person tp map
+        addPersonAndAccounts(vasyl, list1);
+        // add person to map
         Person kolya = new Person("Kolya");
-        map.put(kolya, null);
-        map.put(new Person("Olena"),list3);
+        addPersonAndAccounts(kolya, null);
+        addPersonAndAccounts(new Person("Olena"), list3);
         printMyMap(map);
 
         //remove person
-        map.remove(kolya);
-        printMyMap(map);
-
+        removePerson(map, kolya);
 
         // get accounts list by person
         List<Account> list2 = map.get(vasyl);
         // remove an account in list
         list2.remove(1);
         // update edited list for the person
-        map.put(vasyl, list2);
+        addPersonAndAccounts(vasyl, list2);
         printMyMap(map);
 
+    }
+
+    private static void addPersonAndAccounts(Person person, List<Account> accountList) {
+        map.put(person, accountList);
+    }
+
+    private static void removePerson(Map<Person, List<Account>> map, Person person) {
+        map.remove(person);
+        printMyMap(map);
     }
 
     private static void printMyMap(Map<Person, List<Account>> map) {
